@@ -43,6 +43,7 @@ export default class Main extends Component {
 
   onDoneAddItem = () => {
     const { inputValue } = this.state;
+
     if (inputValue !== '') {
       this.setState(prevState => {
         const id = uuid();
@@ -133,53 +134,52 @@ export default class Main extends Component {
     const { inputValue, loadingItems, allItems } = this.state;
 
     return (
-      <View style = {styles.main}>
-<StatusBar barStyle="light-content" />
-				<View style={styles.centered}>
-					<Header title={headerTitle} />
-				</View>
-				<View style={styles.inputContainer}>
-					<SubTitle subtitle={"What's Next?"} />
-					<Input
-						inputValue={inputValue}
-						onChangeText={this.newInputValue}
-						onDoneAddItem={this.onDoneAddItem}
-					/>
-				</View>
-				<View style={styles.list}>
-					<View style={styles.column}>
-						<SubTitle subtitle={'Recent Notes'} />
-						<View style={styles.deleteAllButton}>
-							<Button deleteAllItems={this.deleteAllItems} />
-						</View>
-					</View>
-
-					{loadingItems ? (
-						<ScrollView contentContainerStyle={styles.scrollableList}>
-							{Object.values(allItems)
-								.reverse()
-								.map(item => (
-									<List
-										key={item.id}
-										{...item}
-										deleteItem={this.deleteItem}
-										completeItem={this.completeItem}
-										incompleteItem={this.incompleteItem}
-									/>
-								))}
-						</ScrollView>
-					) : (
-						<ActivityIndicator size="large" color="red" />
-					)}
-				</View>
+      <View style={styles.main}>
+        <StatusBar barStyle="light-content" />
+        <View style={styles.centered}>
+          <Header title={headerTitle} />
+        </View>
+        <View style={styles.inputContainer}>
+          <SubTitle subtitle={"What's Next?"} />
+          <Input
+            inputValue={inputValue}
+            onChangeText={this.newInputValue}
+            onDoneAddItem={this.onDoneAddItem}
+          />
+        </View>
+        <View style={styles.list}>
+          <View style={styles.column}>
+            <SubTitle subtitle={'Recent Notes'} />
+            <View style={styles.deleteAllButton}>
+              <Button deleteAllItems={this.deleteAllItems} />
+            </View>
+          </View>
+          {loadingItems ? (
+            <ScrollView contentContainerStyle={styles.scrollableList}>
+              {Object.values(allItems)
+                .reverse()
+                .map(item => (
+                  <List
+                    key={item.id}
+                    {...item}
+                    deleteItem={this.deleteItem}
+                    completeItem={this.completeItem}
+                    incompleteItem={this.incompleteItem}
+                  />
+                ))}
+            </ScrollView>
+          ) : (
+              <ActivityIndicator size="large" color="red" />
+            )}
+        </View>
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  main : {
-    backgroundColor : 'transparent'
+  main: {
+    backgroundColor: 'transparent'
   },
   container: {
     flex: 1
